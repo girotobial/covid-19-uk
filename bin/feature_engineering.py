@@ -1,7 +1,7 @@
 import pandas as pd
 from pathlib import Path
 import numpy as np
-from util import divide
+from bin.util import divide
 
 
 def growth_ratio(iterable):
