@@ -1,6 +1,7 @@
 import pandas as pd
 from pathlib import Path
 import numpy as np
+from util import divide
 
 
 def growth_ratio(iterable):
@@ -10,7 +11,7 @@ def growth_ratio(iterable):
             ratio = 1
 
         if i > 0:
-            ratio = val / iterable[i - 1]
+            ratio = divide(val, iterable[i - 1], 1)
 
         growth_list.append(ratio)
     return growth_list
@@ -34,7 +35,7 @@ def main():
     data_path = Path().cwd() / 'data'
     dataframe = pd.read_csv(data_path / 'DailyConfirmedCases.csv')
 
-    dataframe['GrowthRatio'] = growth_ratio(dataframe['CumCases'])
+    dataframe['GrowthFactor'] = growth_ratio(dataframe['CMODateCount'])
     dataframe['SecondDerivativeCases'] = calculate_derivative(
         dataframe['CMODateCount']
     )
