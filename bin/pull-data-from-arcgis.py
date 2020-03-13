@@ -20,7 +20,7 @@ def main():
 
     # Import and convert to csv
     dataframe = pd.read_excel(data_path / 'DailyConfirmedCases.xlsx')
-    dataframe.to_csv(data_path / 'DailyConfirmedCases.csv')
+    dataframe.to_csv(data_path / 'DailyConfirmedCases.csv', index=False)
 
     # Delete xlsx file
     Path(data_path / 'DailyConfirmedCases.xlsx').unlink()
