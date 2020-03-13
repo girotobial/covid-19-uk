@@ -30,15 +30,33 @@ def calculate_derivative(iterable):
     return change_list
 
 
-def main():
-    # Import data
+def main(dataframe=None):
     data_path = Path().cwd() / 'data'
-    dataframe = pd.read_csv(data_path / 'DailyConfirmedCases.csv')
 
+    if dataframe is None:
+        # Import data
+        dataframe = pd.read_csv(
+            data_path / 'DailyConfirmedCases.csv',
+            parse_dates=['DateVal'],
+            dayfirst=True
+        )
+
+
+    # Add growth factor
     dataframe['GrowthFactor'] = growth_ratio(dataframe['CMODateCount'])
-    dataframe['SecondDerivativeCases'] = calculate_derivative(
+
+    # Calculate growth derivative
+    dataframe['GrowthDerivative'] = calculate_derivative(
         dataframe['CMODateCount']
     )
+
+    # Date features
+    dataframe['Year'] = dataframe['DateVal'].dt.year
+    dataframe['Month'] = dataframe['DateVal'].dt.month
+    dataframe['Day'] = dataframe['DateVal'].dt.day
+    dataframe['Week'] = dataframe['DateVal'].dt.week
+
+    # Output to file
     dataframe.to_csv(
         data_path / 'DailyConfirmedCasesWithFeatures.csv',
         index=False
