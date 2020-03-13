@@ -1,5 +1,6 @@
 from arcgis.gis import GIS
 from pathlib import Path
+import pandas as pd
 
 
 def main():
@@ -16,6 +17,14 @@ def main():
 
     # Download data
     data_item.download(save_path=data_path)
+
+    # Import and convert to csv
+    dataframe = pd.read_excel(data_path / 'DailyConfirmedCases.xlsx')
+    dataframe.to_csv(data_path / 'DailyConfirmedCases.csv', index=False)
+
+    # Delete xlsx file
+    Path(data_path / 'DailyConfirmedCases.xlsx').unlink()
+
 
 if __name__ == '__main__':
     main()
