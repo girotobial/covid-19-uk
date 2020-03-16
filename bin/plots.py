@@ -27,7 +27,7 @@ def _plot_cases(
     plt.xticks(rotation=45, ha='right')
     plt.grid(which='major', axis='y')
     plt.tight_layout()
-    sns.despine()
+    sns.despine(left=True)
 
 
 def plot_total_cases(data, yscale='linear', **kwargs):
@@ -52,9 +52,21 @@ def plot_new_cases(data, yscale='linear', **kwargs)
     )
 
 
-def plot_growthfactor()
+def plot_growthfactor(data, **kwargs):
+    data.plot(
+        y='GrowthFactor',
+        **kwargs
+    )
+    plt.xlabel('Date'),
+    plt.ylabel('Growth Factor'),
+    plt.title('Growth Factor of COVID-19 by Date')
+    left, right = plt.xlim()
+    plt.hlines(1, left, right, ls='--', color='k')
+    plt.xticks(rotation=45, ha='right')
+    plt.grid(which='major', axis='y')
+    plt.tight_layout()
+    sns.despine(left=True)
     
-    pass
 
 def main():
     # TODO
