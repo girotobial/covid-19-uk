@@ -6,22 +6,35 @@ from pathlib import Path
 import bin.util as util
 
 
-def plot_total_cases(data, yscale='linear', **kwargs):
+def _plot(
+    data,
+    y,
+    yscale,
+    ylabel,
+    title,
+    **kwargs
+):
     data.plot(
-        y='CumCases',
+        y=y,
         **kwargs
     )
     plt.yscale(yscale)
     _, top = plt.ylim()
     plt.ylim(0, top)
-    plt.ylabel('Date')
-    plt.ylabel('Cumulative Cases')
-    plt.title('Cases of COVID-19 in the UK')
+    plt.xlabel('Date')
+    plt.ylabel(ylabel)
+    plt.title(title)
     plt.xticks(rotation=45, ha='right')
     plt.grid(which='major', axis='y')
 
     plt.tight_layout()
     sns.despine()
+
+
+def plot_total_cases(data):
+    # TODO
+    pass
+
 
 def plot_new_cases(data, yscale='linear', **kwargs)
     # TODO
