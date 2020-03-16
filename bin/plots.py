@@ -42,8 +42,14 @@ def plot_total_cases(data, yscale='linear', **kwargs):
 
 
 def plot_new_cases(data, yscale='linear', **kwargs)
-    # TODO
-    pass
+    _plot(
+        data,
+        y='CMODateCount',
+        yscale=yscale,
+        ylabel='New Cases',
+        title='New Confirmed Cases of COVID-19 in the UK',
+        **kwargs
+    )
 
 
 def plot_growthfactor()
