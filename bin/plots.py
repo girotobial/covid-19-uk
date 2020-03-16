@@ -16,11 +16,13 @@ def _plot_cases(
 ):
     data.plot(
         y=y,
+        legend=None,
         **kwargs
     )
     plt.yscale(yscale)
-    _, top = plt.ylim()
-    plt.ylim(0, top)
+    if yscale == 'linear':
+        _, top = plt.ylim()
+        plt.ylim(0, top)
     plt.xlabel('Date')
     plt.ylabel(ylabel)
     plt.title(title)
@@ -36,12 +38,12 @@ def plot_total_cases(data, yscale='linear', **kwargs):
         y='CumCases',
         yscale=yscale,
         ylabel='Total Cases',
-        title='Total Cases of COVID=19 over time in the UK',
+        title='Total Cases of COVID-19 over time in the UK',
         **kwargs
     )
 
 
-def plot_new_cases(data, yscale='linear', **kwargs)
+def plot_new_cases(data, yscale='linear', **kwargs):
     _plot_cases(
         data,
         y='CMODateCount',
@@ -55,7 +57,8 @@ def plot_new_cases(data, yscale='linear', **kwargs)
 def plot_growthfactor(data, **kwargs):
     data.plot(
         y='GrowthFactor',
-        **kwargs
+        **kwargs,
+        legend=None
     )
     plt.xlabel('Date'),
     plt.ylabel('Growth Factor'),
@@ -66,8 +69,52 @@ def plot_growthfactor(data, **kwargs):
     plt.grid(which='major', axis='y')
     plt.tight_layout()
     sns.despine(left=True)
-    
+
 
 def main():
-    # TODO
-    pass
+    # Read in data
+    path = Path().cwd()
+    dailes = pd.read_csv(
+        path / 'data' / 'DailyConfirmedCasesWithFeatures.csv',
+        index_col='DateVal'
+        )
+
+    # Setup chart style
+    sns.set(style='ticks', context='notebook')
+
+    # Plot total cases with linear y axis
+    plot_total_cases(
+        dailes,
+        marker='.',
+        color='C0'
+    )
+    plt.savefig(path / 'confirmed-cases-linear-axis.png')
+
+    # Plot total cases with logarithmic axis
+    plot_total_cases(
+        dailes,
+        yscale='log',
+        marker='.',
+        color='C0'
+    )
+    plt.savefig(path / 'confirmed-cases-logarthimic-axis.png')
+
+    # Plot new cases
+    plot_new_cases(
+        dailes,
+        marker='.',
+        color='C1'
+    )
+    plt.savefig(path / 'new-cases.png')
+
+    # Plot growth factor
+    plot_growthfactor(
+        dailes,
+        marker='.',
+        color='C2'
+    )
+    plt.savefig(path / 'growth-factor.png')
+
+
+if __name__ == '__main__':
+    main()
