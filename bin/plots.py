@@ -6,7 +6,7 @@ from pathlib import Path
 import bin.util as util
 
 
-def _plot(
+def _plot_cases(
     data,
     y,
     yscale,
@@ -31,7 +31,7 @@ def _plot(
 
 
 def plot_total_cases(data, yscale='linear', **kwargs):
-    _plot(
+    _plot_cases(
         data,
         y='CumCases',
         yscale=yscale,
@@ -42,7 +42,7 @@ def plot_total_cases(data, yscale='linear', **kwargs):
 
 
 def plot_new_cases(data, yscale='linear', **kwargs)
-    _plot(
+    _plot_cases(
         data,
         y='CMODateCount',
         yscale=yscale,
@@ -53,7 +53,7 @@ def plot_new_cases(data, yscale='linear', **kwargs)
 
 
 def plot_growthfactor()
-    # TODO
+    
     pass
 
 def main():
