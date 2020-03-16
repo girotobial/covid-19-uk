@@ -26,14 +26,19 @@ def _plot(
     plt.title(title)
     plt.xticks(rotation=45, ha='right')
     plt.grid(which='major', axis='y')
-
     plt.tight_layout()
     sns.despine()
 
 
-def plot_total_cases(data):
-    # TODO
-    pass
+def plot_total_cases(data, yscale='linear', **kwargs):
+    _plot(
+        data,
+        y='CumCases',
+        yscale=yscale,
+        ylabel='Total Cases',
+        title='Total Cases of COVID=19 over time in the UK',
+        **kwargs
+    )
 
 
 def plot_new_cases(data, yscale='linear', **kwargs)
