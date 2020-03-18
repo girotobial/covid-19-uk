@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import pandas as pd
-import seaborn as sns 
+import seaborn as sns
 from pathlib import Path
 import bin.util as util
 
@@ -43,15 +43,24 @@ def plot_total_cases(data, yscale='linear', **kwargs):
     )
 
 
-def plot_new_cases(data, yscale='linear', **kwargs):
-    _plot_cases(
-        data,
-        y='CMODateCount',
-        yscale=yscale,
-        ylabel='New Cases',
-        title='New Confirmed Cases of COVID-19 in the UK',
-        **kwargs
-    )
+def plot_new_cases(data, **kwargs):
+    # Esnure any existing plots are cleared
+    plt.clf()
+
+    # Make sure date values are in python date time
+    data.reset_index(inplace=True)
+    data['DateVal'] = pd.to_datetime(data['DateVal']).dt.to_pydatetime()
+
+    # Plot bar chart
+    plt.bar(data['DateVal'], data['CMODateCount'], **kwargs)
+    plt.gca().xaxis_date()
+    plt.xlabel('Date')
+    plt.ylabel('New Cases')
+    plt.title('New Cases per Day')
+    plt.xticks(rotation=45, ha='right')
+    plt.grid(which='major', axis='y')
+    plt.tight_layout()
+    sns.despine(left=True)
 
 
 def plot_growthfactor(data, **kwargs):
@@ -102,7 +111,6 @@ def main():
     # Plot new cases
     plot_new_cases(
         dailes,
-        marker='.',
         color='C1'
     )
     plt.savefig(path / 'new-cases.png')
