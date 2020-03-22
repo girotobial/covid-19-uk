@@ -64,30 +64,35 @@ def plot_new_cases(data, **kwargs):
 
 
 def plot_growthfactor(data, **kwargs):
-    data.plot(
-        y='GrowthFactor',
+    plt.clf()
+    data.reset_index(inplace=True)
+    data['DateVal'] = pd.to_datetime(data['DateVal']).dt.to_pydatetime()
+
+    plt.plot(
+        data['DateVal'],
+        data['GrowthFactor'],
         **kwargs,
         linestyle='--',
         alpha=0.25,
-        legend=False,
         marker='.',
         label='Growth Factor'
     )
     plt.plot(
-        data.index,
+        data['DateVal'],
         data['GF5DayEMA'],
         **kwargs,
         label='GrowthFactor (5 Day EMA)',
         marker=None,
     )
     plt.plot(
-        data.index,
+        data['DateVal'],
         data['GF14DayEMA'],
         **kwargs,
         label='GrowthFactor (14 Day EMA)',
         marker=None,
         linestyle='dotted',
     )
+    plt.gca().xaxis_date()
     plt.legend()
     plt.xlabel('Date'),
     plt.ylabel('Growth Factor'),
