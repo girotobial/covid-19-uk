@@ -67,8 +67,28 @@ def plot_growthfactor(data, **kwargs):
     data.plot(
         y='GrowthFactor',
         **kwargs,
-        legend=None
+        linestyle='--',
+        alpha=0.25,
+        legend=False,
+        marker='.',
+        label='Growth Factor'
     )
+    plt.plot(
+        data.index,
+        data['GF5DayEMA'],
+        **kwargs,
+        label='GrowthFactor (5 Day EMA)',
+        marker=None,
+    )
+    plt.plot(
+        data.index,
+        data['GF14DayEMA'],
+        **kwargs,
+        label='GrowthFactor (14 Day EMA)',
+        marker=None,
+        linestyle='dotted',
+    )
+    plt.legend()
     plt.xlabel('Date'),
     plt.ylabel('Growth Factor'),
     plt.title('Growth Factor of COVID-19 by Date')
@@ -118,7 +138,6 @@ def main():
     # Plot growth factor
     plot_growthfactor(
         dailes,
-        marker='.',
         color='C2'
     )
     plt.savefig(path / 'growth-factor.png')

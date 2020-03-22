@@ -42,8 +42,15 @@ def main(dataframe=None):
         )
 
 
-    # Add growth factor
+    # Add growth factor and rolling averages
     dataframe['GrowthFactor'] = growth_ratio(dataframe['CMODateCount'])
+    dataframe['GF5DayEMA'] = dataframe.GrowthFactor.ewm(
+        span=5, adjust=False
+        ).mean()
+    dataframe['GF14DayEMA'] = dataframe.GrowthFactor.ewm(
+        span=30, adjust=False
+        ).mean()
+    
 
     # Calculate growth derivative
     dataframe['GrowthDerivative'] = calculate_derivative(
