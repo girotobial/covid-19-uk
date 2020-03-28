@@ -73,24 +73,15 @@ def plot_growthfactor(data, **kwargs):
         data['GrowthFactor'],
         **kwargs,
         linestyle='--',
-        alpha=0.25,
-        marker='.',
+        alpha=0.5,
         label='Growth Factor'
-    )
-    plt.plot(
-        data['DateVal'],
-        data['GF5DayEMA'],
-        **kwargs,
-        label='GrowthFactor (5 Day EMA)',
-        marker=None,
     )
     plt.plot(
         data['DateVal'],
         data['GF14DayEMA'],
         **kwargs,
-        label='GrowthFactor (14 Day EMA)',
+        label='GrowthFactor (Exp. Moving Average)',
         marker=None,
-        linestyle='dotted',
     )
     plt.gca().xaxis_date()
     plt.legend()
