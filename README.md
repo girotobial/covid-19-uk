@@ -18,6 +18,14 @@ COVID-19 UK aims to use the data from Public Health England to track and analyse
 
 ### Growth factor
 
-> <img src="https://render.githubusercontent.com/render/math?math=GF=\frac{Cases_{day}}{Cases_{day - 1}}">
+[Explanation by 3Blue1Brown](https://youtu.be/Kas0tIxDvrg)
+
+> <img src="https://render.githubusercontent.com/render/math?math=GF=\frac{New Cases_{day}}{New Cases_{day - 1}}">
 
 ![](growth-factor.png)
+
+### Growth Trajectory
+
+[Explanation by Minute Physics](https://youtu.be/54XLXg4fYsc)
+
+![](trajectory.png)
