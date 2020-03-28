@@ -27,5 +27,6 @@ COVID-19 UK aims to use the data from Public Health England to track and analyse
 ### Growth Trajectory
 
 [Explanation by Minute Physics](https://youtu.be/54XLXg4fYsc)
+[See more at https://aatishb.com/covidtrends/](https://aatishb.com/covidtrends/)
 
 ![](trajectory.png)
