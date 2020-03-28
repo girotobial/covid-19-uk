@@ -117,8 +117,8 @@ def plot_new_v_total_cases(data, color, **kwargs):
         color=color
     )
     plt.scatter(
-        data['CumCases'][-1],
-        data['rolling_new_cases'][-1],
+        data['CumCases'].iloc[-1],
+        data['rolling_new_cases'].iloc[-1],
         marker='o',
         color=color,
     )
@@ -127,7 +127,7 @@ def plot_new_v_total_cases(data, color, **kwargs):
     _, x_max = plt.xlim()
     plt.xlim(10, x_max)
     plt.ylim(10, x_max)
-    plt.ylabel('New Confirmed Cases (in the Past Week')
+    plt.ylabel('New Confirmed Cases (in the Past Week)')
     plt.xlabel('Total Confirmed Cases')
     plt.title('Trajectory of Covid-19 Confirmed Cases (UK)')
     plt.text(
