@@ -105,6 +105,41 @@ def plot_growthfactor(data, **kwargs):
     sns.despine(left=True)
 
 
+def plot_new_v_total_cases(data, color, **kwargs):
+    plt.clf()
+
+    data['rolling_new_cases'] = data['CMODateCount'].rolling(7).sum()
+    data = data[data['CumCases'] > 10]
+
+    plt.plot(
+        data['CumCases'],
+        data['rolling_new_cases'],
+        color=color
+    )
+    plt.scatter(
+        data['CumCases'][-1],
+        data['rolling_new_cases'][-1],
+        marker='o',
+        color=color,
+    )
+    plt.xscale('log')
+    plt.yscale('log')
+    _, x_max = plt.xlim()
+    plt.xlim(10, x_max)
+    plt.ylim(10, x_max)
+    plt.ylabel('New Confirmed Cases (in the Past Week')
+    plt.xlabel('Total Confirmed Cases')
+    plt.title('Trajectory of Covid-19 Confirmed Cases (UK)')
+    plt.text(
+        10,
+        1,
+        ('Based on work by Aatish Bhatia & Minute Physics'
+        '\nhttps://aatishb.com/covidtrends/')
+    )
+    plt.grid(which='major')
+    sns.despine()
+
+
 def main():
     # Read in data
     path = Path().cwd()
@@ -146,6 +181,12 @@ def main():
         color='C2'
     )
     plt.savefig(path / 'growth-factor.png')
+
+    plot_new_v_total_cases(
+        dailes, 
+        color='C3'
+    )
+    plt.savefig(path / 'trajectory.png')
 
 
 if __name__ == '__main__':
