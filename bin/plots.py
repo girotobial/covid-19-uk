@@ -83,8 +83,17 @@ def plot_growthfactor(data, **kwargs):
         data['DateVal'],
         data['GF14DayEMA'],
         **kwargs,
-        label='GrowthFactor (Exp. Moving Average)',
+        label='GrowthFactor (Exp. Moving Average N=14)',
         marker=None,
+    )
+    end_x = data['DateVal'].iloc[-1]
+    end_y = data['GF14DayEMA'].iloc[-1]
+    plt.text(
+        end_x,
+        end_y,
+        f'{end_y: .2f}',
+        **kwargs,
+        va='center',
     )
     plt.gca().xaxis_date()
     plt.legend()
