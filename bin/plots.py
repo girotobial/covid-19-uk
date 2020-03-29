@@ -79,11 +79,12 @@ def plot_growthfactor(data, **kwargs):
         alpha=0.5,
         label='Growth Factor'
     )
+    alpha = 2 / (14 + 1)
     plt.plot(
         data['DateVal'],
         data['GF14DayEMA'],
         **kwargs,
-        label='GrowthFactor (Exp. Moving Average N=14)',
+        label=f'Exponential Moving Average ($\\alpha$ ={alpha: .2f})',
         marker=None,
     )
     end_x = data['DateVal'].iloc[-1]
