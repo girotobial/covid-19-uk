@@ -48,7 +48,7 @@ def main(dataframe=None):
         span=5, adjust=False
         ).mean()
     dataframe['GF14DayEMA'] = dataframe.GrowthFactor.ewm(
-        span=30, adjust=False
+        span=14, adjust=False
         ).mean()
     
 
