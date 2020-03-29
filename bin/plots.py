@@ -111,11 +111,21 @@ def plot_new_v_total_cases(data, color, **kwargs):
         data['rolling_new_cases'],
         color=color
     )
+    end_x = data['CumCases'].iloc[-1]
+    end_y = data['rolling_new_cases'].iloc[-1]
     plt.scatter(
-        data['CumCases'].iloc[-1],
-        data['rolling_new_cases'].iloc[-1],
+        end_x,
+        end_y,
         marker='o',
         color=color,
+    )
+    plt.text(
+        end_x * 0.9,
+        end_y,
+        f'({end_x: .0f}, {end_y: .0f})',
+        color=color,
+        ha='right',
+        va='center'
     )
     plt.xscale('log')
     plt.yscale('log')
