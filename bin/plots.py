@@ -4,6 +4,7 @@ import pandas as pd
 import seaborn as sns
 from pathlib import Path
 import bin.util as util
+from datetime import date
 
 
 def _plot_cases(
@@ -33,12 +34,13 @@ def _plot_cases(
 
 
 def plot_total_cases(data, yscale='linear', **kwargs):
+    today = date.today().strftime(r"%d/%m/%Y")
     _plot_cases(
         data,
         y='CumCases',
         yscale=yscale,
         ylabel='Total Cases',
-        title='Total Cases of COVID-19 over time in the UK',
+        title=f'COVID-19 Confirmed Cases in the UK ({today})',
         **kwargs
     )
 
@@ -56,7 +58,8 @@ def plot_new_cases(data, **kwargs):
     plt.gca().xaxis_date()
     plt.xlabel('Date')
     plt.ylabel('New Cases')
-    plt.title('New Cases per Day')
+    today = date.today().strftime(r"%d/%m/%Y")
+    plt.title(f'New Confimed Cases UK ({today})')
     plt.xticks(rotation=45, ha='right')
     plt.grid(which='major', axis='y')
     plt.tight_layout()
@@ -87,7 +90,8 @@ def plot_growthfactor(data, **kwargs):
     plt.legend()
     plt.xlabel('Date'),
     plt.ylabel('Growth Factor'),
-    plt.title('Growth Factor of COVID-19 by Date')
+    today = date.today().strftime(r"%d/%m/%Y")
+    plt.title(f'COVID-19 Growth Factor in the UK ({today})')
     left, right = plt.xlim()
     plt.hlines(1, left, right, ls='--', color='k')
     plt.xticks(rotation=45, ha='right')
@@ -120,7 +124,8 @@ def plot_new_v_total_cases(data, color, **kwargs):
     plt.ylim(10, x_max)
     plt.ylabel('New Confirmed Cases (in the Past Week)')
     plt.xlabel('Total Confirmed Cases')
-    plt.title('Trajectory of Covid-19 Confirmed Cases (UK)')
+    today = date.today().strftime(r"%d/%m/%Y")
+    plt.title(f'Trajectory of Covid-19 Confirmed Cases (UK) ({today})')
     plt.text(
         10,
         1,
