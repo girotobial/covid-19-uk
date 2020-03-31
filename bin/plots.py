@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+from matplotlib.ticker import ScalarFormatter
 import pandas as pd
 import seaborn as sns
 from pathlib import Path
@@ -29,6 +30,13 @@ def _plot_cases(
     plt.title(title)
     plt.xticks(rotation=45, ha='right')
     plt.grid(which='major', axis='y')
+
+    # Change scientific yaxis to normal numbers
+    formatter = ScalarFormatter()
+    formatter.set_scientific(False)
+    ax = plt.gca()
+    ax.yaxis.set_major_formatter(formatter)
+
     plt.tight_layout()
     sns.despine(left=True)
 
