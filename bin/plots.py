@@ -49,6 +49,7 @@ def plot_total_cases(data, yscale='linear', **kwargs):
         yscale=yscale,
         ylabel='Total Count',
         title=f'COVID-19 Confirmed Cases & Deaths in the UK ({today})',
+        label='Confirmed Cases',
         **kwargs
     )
     plt.plot(
