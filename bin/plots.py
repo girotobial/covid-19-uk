@@ -47,10 +47,18 @@ def plot_total_cases(data, yscale='linear', **kwargs):
         data,
         y='CumCases',
         yscale=yscale,
-        ylabel='Total Cases',
-        title=f'COVID-19 Confirmed Cases in the UK ({today})',
+        ylabel='Total Count',
+        title=f'COVID-19 Confirmed Cases & Deaths in the UK ({today})',
         **kwargs
     )
+    plt.plot(
+        data.index,
+        data['CumDeaths'],
+        label='Deaths',
+        color='C1',
+        marker='.'
+    )
+    plt.legend()
 
 
 def plot_new_cases(data, **kwargs):
