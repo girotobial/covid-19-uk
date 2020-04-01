@@ -127,7 +127,8 @@ def plot_new_v_total_cases(data, color, **kwargs):
     plt.plot(
         data['CumCases'],
         data['rolling_new_cases'],
-        color=color
+        color=color,
+        marker='.'
     )
     end_x = data['CumCases'].iloc[-1]
     end_y = data['rolling_new_cases'].iloc[-1]
