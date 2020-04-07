@@ -2,6 +2,7 @@ import bin.feature_engineering as feature_engineering
 import bin.plots as plots
 
 def main():
+    print('Features...')
     feature_engineering.main()
     print('Plotting...')
     plots.main()
