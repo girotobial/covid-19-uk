@@ -123,6 +123,7 @@ def plot_growthfactor(data, **kwargs):
     plt.hlines(1, left, right, ls='--', color='k')
     plt.xticks(rotation=45, ha='right')
     plt.grid(which='major', axis='y')
+    plt.ylim(0, 2)
     plt.tight_layout()
     sns.despine(left=True)
 
@@ -141,24 +142,18 @@ def plot_new_v_total_cases(data, color, **kwargs):
     )
     end_x = data['CumCases'].iloc[-1]
     end_y = data['rolling_new_cases'].iloc[-1]
-    plt.scatter(
-        end_x,
-        end_y,
-        marker='o',
-        color=color,
-    )
     plt.text(
-        end_x * 0.9,
+        end_x*1.2,
         end_y,
-        f'({end_x: .0f}, {end_y: .0f})',
+        f'Total:{end_x: .0f}\nNew:{end_y: .0f}',
         color=color,
-        ha='right',
+        ha='left',
         va='center'
     )
     plt.xscale('log')
     plt.yscale('log')
     _, x_max = plt.xlim()
-    plt.xlim(10, x_max)
+    plt.xlim(10, x_max * 5)
     plt.ylim(10, x_max)
     plt.ylabel('New Confirmed Cases (in the Past Week)')
     plt.xlabel('Total Confirmed Cases')
@@ -166,7 +161,7 @@ def plot_new_v_total_cases(data, color, **kwargs):
     plt.title(f'Trajectory of Covid-19 Confirmed Cases (UK) ({today})')
     plt.text(
         10,
-        1,
+        0.5,
         ('Based on work by Aatish Bhatia & Minute Physics'
         '\nhttps://aatishb.com/covidtrends/')
     )
