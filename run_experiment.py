@@ -1,11 +1,15 @@
-import bin.feature_engineering as feature_engineering
-import bin.plots as plots
+from bin.update_data import main as update
+from bin.feature_engineering import main as features
+from bin.plots import main as plot
+
 
 def main():
+    print('Updating...')
+    update()
     print('Features...')
-    feature_engineering.main()
+    features()
     print('Plotting...')
-    plots.main()
+    plot()
 
 if __name__ == '__main__':
     main()
