@@ -51,6 +51,13 @@ def main(dataframe=None):
         span=14, adjust=False
         ).mean()
     
+    # Calculate growth factor for deaths
+
+    dataframe['GrowthFactorDeaths'] = growth_ratio(dataframe['DailyDeaths'])
+    dataframe['GFD14DayEMA'] = dataframe['GrowthFactorDeaths'].ewm(
+        span=14,
+        adjust=False
+    ).mean()
 
     # Calculate growth derivative
     dataframe['GrowthDerivative'] = calculate_derivative(
