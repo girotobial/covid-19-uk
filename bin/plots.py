@@ -7,6 +7,7 @@ from pathlib import Path
 import bin.util as util
 from datetime import date
 
+FIGSIZE = (9.75, 6)
 
 def _plot_cases(
     data,
@@ -36,13 +37,14 @@ def _plot_cases(
     formatter.set_scientific(False)
     ax = plt.gca()
     ax.yaxis.set_major_formatter(formatter)
-
+    plt.gcf().set_size_inches(*FIGSIZE)
     plt.tight_layout()
     sns.despine(left=True)
 
 
 def plot_total_cases(data, yscale='linear', **kwargs):
     today = date.today().strftime(r"%d/%m/%Y")
+    
     _plot_cases(
         data,
         y='CumCases',
@@ -87,7 +89,7 @@ def plot_growthfactor(data, **kwargs):
     plt.clf()
     data.reset_index(inplace=True)
     data['DateVal'] = pd.to_datetime(data['DateVal']).dt.to_pydatetime()
-
+    
     plt.plot(
         data['DateVal'],
         data['GrowthFactor'],
@@ -124,13 +126,13 @@ def plot_growthfactor(data, **kwargs):
     plt.xticks(rotation=45, ha='right')
     plt.grid(which='major', axis='y')
     plt.ylim(0, 2)
+    plt.gcf().set_size_inches(*FIGSIZE)
     plt.tight_layout()
     sns.despine(left=True)
 
 
 def plot_new_v_total_cases(data, color, **kwargs):
     plt.clf()
-
     data['rolling_new_cases'] = data['CMODateCount'].rolling(7).sum()
     data = data[data['CumCases'] > 10]
 
@@ -166,6 +168,7 @@ def plot_new_v_total_cases(data, color, **kwargs):
         '\nhttps://aatishb.com/covidtrends/')
     )
     plt.grid(which='major')
+    plt.gcf().set_size_inches(*FIGSIZE)
     sns.despine()
 
 
@@ -179,7 +182,7 @@ def main():
 
     # Setup chart style
     sns.set(style='ticks', context='notebook')
-
+    
     # Plot total cases with linear y axis
     plot_total_cases(
         dailes,
