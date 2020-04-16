@@ -163,7 +163,7 @@ def plot_new_v_total_cases(data, color, **kwargs):
     plt.title(f'Trajectory of Covid-19 Confirmed Cases (UK) ({today})')
     plt.text(
         10,
-        0.5,
+        1,
         ('Based on work by Aatish Bhatia & Minute Physics'
         '\nhttps://aatishb.com/covidtrends/')
     )
