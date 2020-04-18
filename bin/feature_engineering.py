@@ -41,6 +41,17 @@ def main(dataframe=None):
             dayfirst=True
         )
 
+    # Import and add test data
+    tests = pd.read_csv(
+        data_path / 'DailyTests.csv',
+        parse_dates=['DateVal'],
+        dayfirst=True
+    )
+
+    dataframe = dataframe.merge(
+        tests,
+        on='DateVal'
+    )
 
     # Add growth factor and rolling averages
     dataframe['GrowthFactor'] = growth_ratio(dataframe['CMODateCount'])
@@ -48,6 +59,22 @@ def main(dataframe=None):
         span=5, adjust=False
         ).mean()
     dataframe['GF14DayEMA'] = dataframe.GrowthFactor.ewm(
+        span=14, adjust=False
+        ).mean()
+    
+    # Calculate Test Growth factor
+    dataframe['TestGrowthFactor'] = growth_ratio(dataframe['TestCount'])
+    dataframe['TestGF14DayEMA'] = dataframe.TestGrowthFactor.ewm(
+        span=14, adjust=False
+        ).mean()
+    
+    # Calculate postive test ratio and growth factor
+    dataframe['PositiveRatio'] = np.round(
+        dataframe['CMODateCount'] / dataframe['TestCount'],
+        4
+    )
+    dataframe['PositiveGrowthFactor'] = growth_ratio(dataframe['PositiveRatio'])
+    dataframe['PositiveGF14DayEMA'] = dataframe['PositiveGrowthFactor'].ewm(
         span=14, adjust=False
         ).mean()
     
