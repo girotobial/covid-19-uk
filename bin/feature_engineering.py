@@ -30,6 +30,41 @@ def calculate_derivative(iterable):
     return change_list
 
 
+def _kalman_update(mean1, mean2, var1, var2):
+    '''
+    Takes two means and two variances
+    and calculates updated gaussian parameters
+
+    Parameters
+    ----------
+    mean1 : float
+            First mean
+    mean2 : float
+            Second mean
+    var1 : float
+            First variance
+    var2 : float
+            Second variance
+    
+    Returns
+    -------
+    mu : float
+            New updated mean
+    sigma : float
+            New updated variance
+    '''
+    
+    mu = (mean1*var2 + mean2*var1) / (var1 + var2)
+    sigma = 1 / (1/var1 + 1/var2)
+
+    return [mu, sigma]
+
+
+def _kalman_predict():
+    # TODO
+    pass
+
+
 def main(dataframe=None):
     data_path = Path().cwd() / 'data'
 
