@@ -60,10 +60,41 @@ def _kalman_update(mean1, mean2, var1, var2):
     return [mu, sigma]
 
 
-def _kalman_predict():
+def _kalman_predict(mean1, mean2, var1, var2):
+    '''
+    Takes two means and two variances
+    and calculates updated gaussian parameters
+
+    Parameters
+    ----------
+    mean1 : float
+            First mean
+    mean2 : float
+            Second mean
+    var1 : float
+            First variance
+    var2 : float
+            Second variance
+    
+    Returns
+    -------
+    mu : float
+            New updated mean
+    sigma : float
+            New updated variance
+    '''
+
     # TODO
     pass
 
+
+class KalmanFilter:
+    def __init__(self, dim_states=2, dim_inputs=1):
+        self.dim_states=dim_states
+        self.dim_inputs=dim_inputs
+        self.P = np.eye(dim_states)
+
+    def startup
 
 def main(dataframe=None):
     data_path = Path().cwd() / 'data'
