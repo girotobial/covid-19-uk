@@ -237,6 +237,16 @@ def main():
     )
     plt.savefig(path / 'positive-test-growth-factor.png')
 
+    # Plot deaths growth factor
+    plot_growthfactor(
+        dailes,
+        gf_column='GrowthFactorDeaths',
+        ema_column='GFD14DayEMA',
+        title='COVID-19 Deaths Growth Factor (UK)',
+        color='C8'
+    )
+    plt.savefig(path / 'death-growth-factor.png')
+
     plot_new_v_total_cases(
         dailes, 
         color='C3'
