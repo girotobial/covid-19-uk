@@ -50,7 +50,8 @@ def main(dataframe=None):
 
     dataframe = dataframe.merge(
         tests,
-        on='DateVal'
+        on='DateVal',
+        how='left'
     )
 
     # Add growth factor and rolling averages
