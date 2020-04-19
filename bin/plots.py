@@ -247,6 +247,7 @@ def main():
     )
     plt.savefig(path / 'death-growth-factor.png')
 
+    # Plot trajectories
     plot_new_v_total_cases(
         dailes, 
         color='C3'
