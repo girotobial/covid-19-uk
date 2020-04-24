@@ -6,7 +6,12 @@ from io import StringIO
 
 
 class NHSEnglandCases:
-    def __init__(self, URL, date_cols=['Specimen date']):
+    def __init__(
+        self,
+        URL=(r'https://coronavirus.data.gov.uk'
+        r'/downloads/csv/coronavirus-cases_latest.csv'),
+        date_cols=['Specimen date']
+    ):
         self.csv = self._download_csv(URL)
         self._date_cols = date_cols
         self.df = self._dataframe()
@@ -33,19 +38,19 @@ class NHSEnglandCases:
         df = self.df
         return df[df['Area type'] == _type]
 
-    def nation(self, nation=None):
+    def national(self, nation=None):
         df = self._filter_area_type('Nation')
 
         if nation is not None:
-            df = df[df['Area Name'] == nation]
+            df = df[df['Area name'] == nation]
 
         return df
 
-    def region(self, region=None):
+    def regional(self, region=None):
         df = self._filter_area_type('Region')
 
         if region is not None:
-            df = df[df['Area Name'] == region]
+            df = df[df['Area name'] == region]
         
         return df
    
@@ -53,6 +58,6 @@ class NHSEnglandCases:
         df = self._filter_area_type('Upper tier local authority')
 
         if authority is not None:
-            df = df[df['Area Name'] == authority]
+            df = df[df['Area name'] == authority]
         
         return df
