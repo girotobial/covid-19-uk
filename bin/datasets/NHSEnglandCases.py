@@ -31,7 +31,7 @@ class NHSEnglandCases:
         return csv
 
     @property
-    def _dataframe(self):
+    def dataframe(self):
         '''Returns downloaded csv as a pandas dataframe'''
         df = pd.read_csv(
             StringIO(self.csv),
@@ -45,7 +45,7 @@ class NHSEnglandCases:
         return df
 
     def _filter_area_type(self, _type):
-        df = self.df
+        df = self.dataframe
         return df[df['Area type'] == _type]
 
     def national(self, nation=None):
