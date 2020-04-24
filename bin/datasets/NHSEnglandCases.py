@@ -1,8 +1,10 @@
 # NHSEnglandCases.py
 
-import pandas as pd
+from pandas import read_csv
 import requests
 from io import StringIO
+from datetime import timedelta, date
+
 
 
 class NHSEnglandCases:
@@ -33,14 +35,17 @@ class NHSEnglandCases:
     @property
     def dataframe(self):
         '''Returns downloaded csv as a pandas dataframe'''
-        df = pd.read_csv(
+        df = read_csv(
             StringIO(self.csv),
             parse_dates=self._date_cols
         )
 
+        # Re-order by date
+        df.sort_values(self._date_cols, inplace=True)
+
         if self.filter_data:
             # Filter last 5 days out of dataset
-            df = df.iloc[:-5, :]
+            df = df[df[self._date_cols] <= date.today() - timedelta(5)]
 
         return df
 
