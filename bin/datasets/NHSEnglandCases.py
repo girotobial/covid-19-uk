@@ -71,7 +71,7 @@ class NHSEnglandCases:
             df = df[df['Area name'] == region]
         
         return df
-   
+
     def utla(self, authority=None):
         df = self._filter_area_type('Upper tier local authority')
 
