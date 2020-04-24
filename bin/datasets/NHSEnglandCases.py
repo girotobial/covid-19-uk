@@ -14,10 +14,12 @@ class NHSEnglandCases:
         self,
         URL=(r'https://coronavirus.data.gov.uk'
         r'/downloads/csv/coronavirus-cases_latest.csv'),
-        date_cols=['Specimen date']
+        date_cols=['Specimen date'],
+        filter_data=True
     ):
         self.csv = self._download_csv(URL)
         self._date_cols = date_cols
+        self.filter_data = filter_data
 
     def _download_csv(self, URL):
         # Download using URL
@@ -36,8 +38,9 @@ class NHSEnglandCases:
             parse_dates=self._date_cols
         )
 
-        # Filter last 5 days out of dataset
-        df = df.iloc[:-5, :]
+        if self.filter_data:
+            # Filter last 5 days out of dataset
+            df = df.iloc[:-5, :]
 
         return df
 
