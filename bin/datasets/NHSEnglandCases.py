@@ -1,9 +1,9 @@
 # NHSEnglandCases.py
 
 from pandas import read_csv
+from numpy import datetime64, timedelta64
 import requests
 from io import StringIO
-from datetime import timedelta, date
 
 
 
@@ -45,7 +45,10 @@ class NHSEnglandCases:
 
         if self.filter_data:
             # Filter last 5 days out of dataset
-            df = df[df[self._date_cols] <= date.today() - timedelta(5)]
+            filter_date = datetime64('today') - timedelta64(5, 'D')
+            df = df[
+                df[self._date_cols[0]] <= filter_date
+            ]
 
         return df
 
