@@ -49,6 +49,8 @@ class NHSEnglandCases:
             df = df[
                 df[self._date_cols[0]] <= filter_date
             ]
+            # Filter out cases less than 10
+            df = df[df['Daily lab-confirmed cases'] > 10]
 
         return df
 
