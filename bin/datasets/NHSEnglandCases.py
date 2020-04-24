@@ -6,6 +6,10 @@ from io import StringIO
 
 
 class NHSEnglandCases:
+    '''
+    Object that handles retrieving COVID-19 cases in england
+    as reported by NHS England at https://coronavirus.data.gov.uk/
+    '''
     def __init__(
         self,
         URL=(r'https://coronavirus.data.gov.uk'
@@ -14,7 +18,6 @@ class NHSEnglandCases:
     ):
         self.csv = self._download_csv(URL)
         self._date_cols = date_cols
-        self.df = self._dataframe()
 
     def _download_csv(self, URL):
         # Download using URL
@@ -24,7 +27,8 @@ class NHSEnglandCases:
         csv = csv.decode('utf-8')
 
         return csv
-    
+
+    @property
     def _dataframe(self):
         '''Returns downloaded csv as a pandas dataframe'''
         df = pd.read_csv(
@@ -32,8 +36,11 @@ class NHSEnglandCases:
             parse_dates=self._date_cols
         )
 
+        # Filter last 5 days out of dataset
+        df = df.iloc[:-5, :]
+
         return df
-    
+
     def _filter_area_type(self, _type):
         df = self.df
         return df[df['Area type'] == _type]
