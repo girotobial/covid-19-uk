@@ -1,6 +1,8 @@
 from arcgis.gis import GIS
 from pathlib import Path
 import pandas as pd
+import requests
+import io
 
 
 def arcgis_download(public_data_id, data_path):
@@ -17,6 +19,22 @@ def arcgis_download(public_data_id, data_path):
 
     # Delete xlsx file
     Path(data_path / 'DailyConfirmedCases.xlsx').unlink()
+
+
+def download_nhs_england(
+    URL=(r'https://coronavirus.data.gov.uk'
+        r'/downloads/csv/coronavirus-cases_latest.csv')
+):
+    # Download csv from URL
+    csv = requests.get(URL, stream=True).content
+
+    # Parse csv with pandas and io
+    df = pd.read_csv(
+        io.StringIO(csv.decode('utf-8')),
+        parse_dates=['Specimen date'],
+    )
+
+    return df
 
 
 def main():
