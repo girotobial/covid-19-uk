@@ -1,29 +1,28 @@
-from arcgis.gis import GIS
 from pathlib import Path
 import pandas as pd
+from .datasets import NHSEnglandCases
 
 
 def main():
-    # Setup gis
-    public_data_id = 'e5fd11150d274bebaaf8fe2a7a2bda11'
-    gis = GIS()
-    data_item = gis.content.get(public_data_id)
-
-    # Setup data directory
-    data_path = Path('./data')
-
-    if not data_path.exists():
-        data_path.mkdir()
-
-    # Download data
-    data_item.download(save_path=data_path)
-
-    # Import and convert to csv
-    dataframe = pd.read_excel(data_path / 'DailyConfirmedCases.xlsx')
-    dataframe.to_csv(data_path / 'DailyConfirmedCases.csv', index=False)
-
-    # Delete xlsx file
-    Path(data_path / 'DailyConfirmedCases.xlsx').unlink()
+    data_path = Path('./data/DailyConfirmedCases.csv')
+    england = NHSEnglandCases().national()
+    england = england[
+        [
+            'DateVal',
+            'EngConfSpecimens',
+            'CumEngConfSpec'
+        ]
+    ]
+    conf_cases = pd.read_csv(
+        data_path,
+        parse_dates=['DateVal']
+    )
+    conf_cases = conf_cases.merge(
+        england,
+        on='DateVal',
+        how='left'
+    )
+    conf_cases.to_csv(data_path)
 
 
 if __name__ == '__main__':
