@@ -247,6 +247,16 @@ def main():
     )
     plt.savefig(path / 'death-growth-factor.png')
 
+    # Plot England growth factor by date of specimen
+    plot_growthfactor(
+        dailes,
+        gf_column='GFSpecimenDate',
+        ema_column='RollingGFSpecimenDate',
+        title='COVID-19 Growth Factor by Specimen Date (England)',
+        color='C2'
+    )
+    plt.savefig(path / 'specimen-date-growth-factor.png')
+
     # Plot trajectories
     plot_new_v_total_cases(
         dailes, 
