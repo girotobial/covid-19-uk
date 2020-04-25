@@ -4,6 +4,7 @@ from .datasets import NHSEnglandCases
 
 
 def main():
+    data_path = Path('./data/DailyConfirmedCases.csv')
     england = NHSEnglandCases().national()
     england = england[
         [
@@ -13,7 +14,7 @@ def main():
         ]
     ]
     conf_cases = pd.read_csv(
-        Path('./data/DailyConfirmedCases.csv'),
+        data_path,
         parse_dates=['DateVal']
     )
     conf_cases = conf_cases.merge(
@@ -21,7 +22,7 @@ def main():
         on='DateVal',
         how='left'
     )
-    print(conf_cases)
+    conf_cases.to_csv(data_path)
 
 
 if __name__ == '__main__':
