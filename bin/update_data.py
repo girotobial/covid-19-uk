@@ -16,7 +16,7 @@ def main():
     conf_cases = pd.read_csv(
         data_path,
         parse_dates=['DateVal']
-    )
+    ).iloc[:, 0:5]
     conf_cases = conf_cases.merge(
         england,
         on='DateVal',
