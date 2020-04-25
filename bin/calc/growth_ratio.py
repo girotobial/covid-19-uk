@@ -1,7 +1,9 @@
 # growth_ratio.py
 
 from .divide import divide
+from numpy import vectorize
 
+@vectorize
 def growth_ratio(iterable):
     growth_list = []
     for i, val in enumerate(iterable):
