@@ -92,6 +92,15 @@ def main(dataframe=None):
         dataframe['CMODateCount']
     )
 
+    # Calculate growth factor for cases by specimen date
+    dataframe['GFSpecimenDate'] = growth_ratio(
+        dataframe['EngConfSpecimens'].values
+    )
+
+    # Calculate rolling average GF by specimen date
+    rolling_sum = dataframe['EngConfSpecimens'].rolling(7).sum()
+    dataframe['RollingGFSpecimenDate'] = growth_ratio(rolling_sum.values)
+
     # Date features
     dataframe['Year'] = dataframe['DateVal'].dt.year
     dataframe['Month'] = dataframe['DateVal'].dt.month
