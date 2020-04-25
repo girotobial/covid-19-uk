@@ -50,7 +50,7 @@ class NHSEnglandCases:
                 df[self._date_cols[0]] <= filter_date
             ]
             # Filter out cases less than 10
-            df = df[df['Daily lab-confirmed cases'] > 10]
+            df = df[df['Cumulative lab-confirmed cases'] > 10]
 
         # Rename some columns
         cols = {
