@@ -52,6 +52,13 @@ class NHSEnglandCases:
             # Filter out cases less than 10
             df = df[df['Daily lab-confirmed cases'] > 10]
 
+        # Rename some columns
+        cols = {
+            'Specimen date': 'DateVal',
+            'Daily lab-confirmed cases': 'EngConfSpecimens',
+            'Cumulative lab-confirmed cases': 'CumEngConfSpec'
+        }
+        df.rename(columns=cols, inplace=True)
         return df
 
     def _filter_area_type(self, _type):
