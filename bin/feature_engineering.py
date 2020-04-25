@@ -41,6 +41,18 @@ def main(dataframe=None):
             dayfirst=True
         )
 
+    # Import and add test data
+    tests = pd.read_csv(
+        data_path / 'DailyTests.csv',
+        parse_dates=['DateVal'],
+        dayfirst=True
+    )
+
+    dataframe = dataframe.merge(
+        tests,
+        on='DateVal',
+        how='left'
+    )
 
     # Add growth factor and rolling averages
     dataframe['GrowthFactor'] = growth_ratio(dataframe['CMODateCount'])
@@ -51,11 +63,43 @@ def main(dataframe=None):
         span=14, adjust=False
         ).mean()
     
+    # Calculate Test Growth factor
+    dataframe['TestGrowthFactor'] = growth_ratio(dataframe['TestCount'])
+    dataframe['TestGF14DayEMA'] = dataframe.TestGrowthFactor.ewm(
+        span=14, adjust=False
+        ).mean()
+    
+    # Calculate postive test ratio and growth factor
+    dataframe['PositiveRatio'] = np.round(
+        dataframe['CMODateCount'] / dataframe['TestCount'],
+        4
+    )
+    dataframe['PositiveGrowthFactor'] = growth_ratio(dataframe['PositiveRatio'])
+    dataframe['PositiveGF14DayEMA'] = dataframe['PositiveGrowthFactor'].ewm(
+        span=14, adjust=False
+        ).mean()
+    
+    # Calculate growth factor for deaths
+
+    dataframe['GrowthFactorDeaths'] = growth_ratio(dataframe['DailyDeaths'])
+    dataframe['GFD14DayEMA'] = dataframe['GrowthFactorDeaths'].ewm(
+        span=14,
+        adjust=False
+    ).mean()
 
     # Calculate growth derivative
     dataframe['GrowthDerivative'] = calculate_derivative(
         dataframe['CMODateCount']
     )
+
+    # Calculate growth factor for cases by specimen date
+    dataframe['GFSpecimenDate'] = growth_ratio(
+        dataframe['EngConfSpecimens'].values
+    )
+
+    # Calculate rolling average GF by specimen date
+    rolling_sum = dataframe['EngConfSpecimens'].rolling(7).sum()
+    dataframe['RollingGFSpecimenDate'] = growth_ratio(rolling_sum.values)
 
     # Date features
     dataframe['Year'] = dataframe['DateVal'].dt.year

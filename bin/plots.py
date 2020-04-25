@@ -7,6 +7,7 @@ from pathlib import Path
 import bin.util as util
 from datetime import date
 
+FIGSIZE = (9.75, 6)
 
 def _plot_cases(
     data,
@@ -36,13 +37,14 @@ def _plot_cases(
     formatter.set_scientific(False)
     ax = plt.gca()
     ax.yaxis.set_major_formatter(formatter)
-
+    plt.gcf().set_size_inches(*FIGSIZE)
     plt.tight_layout()
     sns.despine(left=True)
 
 
 def plot_total_cases(data, yscale='linear', **kwargs):
     today = date.today().strftime(r"%d/%m/%Y")
+    
     _plot_cases(
         data,
         y='CumCases',
@@ -83,14 +85,14 @@ def plot_new_cases(data, **kwargs):
     sns.despine(left=True)
 
 
-def plot_growthfactor(data, **kwargs):
+def plot_growthfactor(data, gf_column, ema_column, title, **kwargs):
     plt.clf()
-    data.reset_index(inplace=True)
+    data = data.reset_index()
     data['DateVal'] = pd.to_datetime(data['DateVal']).dt.to_pydatetime()
-
+    
     plt.plot(
         data['DateVal'],
-        data['GrowthFactor'],
+        data[gf_column],
         **kwargs,
         linestyle='--',
         alpha=0.5,
@@ -99,13 +101,13 @@ def plot_growthfactor(data, **kwargs):
     alpha = 2 / (14 + 1)
     plt.plot(
         data['DateVal'],
-        data['GF14DayEMA'],
+        data[ema_column],
         **kwargs,
         label=f'Exponential Moving Average ($\\alpha$ ={alpha: .2f})',
         marker=None,
     )
     end_x = data['DateVal'].iloc[-1]
-    end_y = data['GF14DayEMA'].iloc[-1]
+    end_y = data[ema_column].iloc[-1]
     plt.text(
         end_x,
         end_y,
@@ -118,18 +120,19 @@ def plot_growthfactor(data, **kwargs):
     plt.xlabel('Date'),
     plt.ylabel('Growth Factor'),
     today = date.today().strftime(r"%d/%m/%Y")
-    plt.title(f'COVID-19 Growth Factor in the UK ({today})')
+    plt.title(f'{title} ({today})')
     left, right = plt.xlim()
     plt.hlines(1, left, right, ls='--', color='k')
     plt.xticks(rotation=45, ha='right')
     plt.grid(which='major', axis='y')
+    plt.ylim(0, 2.5)
+    plt.gcf().set_size_inches(*FIGSIZE)
     plt.tight_layout()
     sns.despine(left=True)
 
 
 def plot_new_v_total_cases(data, color, **kwargs):
     plt.clf()
-
     data['rolling_new_cases'] = data['CMODateCount'].rolling(7).sum()
     data = data[data['CumCases'] > 10]
 
@@ -141,24 +144,18 @@ def plot_new_v_total_cases(data, color, **kwargs):
     )
     end_x = data['CumCases'].iloc[-1]
     end_y = data['rolling_new_cases'].iloc[-1]
-    plt.scatter(
-        end_x,
-        end_y,
-        marker='o',
-        color=color,
-    )
     plt.text(
-        end_x * 0.9,
+        end_x*1.2,
         end_y,
-        f'({end_x: .0f}, {end_y: .0f})',
+        f'Total:{end_x: .0f}\nNew:{end_y: .0f}',
         color=color,
-        ha='right',
+        ha='left',
         va='center'
     )
     plt.xscale('log')
     plt.yscale('log')
     _, x_max = plt.xlim()
-    plt.xlim(10, x_max)
+    plt.xlim(10, x_max * 5)
     plt.ylim(10, x_max)
     plt.ylabel('New Confirmed Cases (in the Past Week)')
     plt.xlabel('Total Confirmed Cases')
@@ -171,6 +168,7 @@ def plot_new_v_total_cases(data, color, **kwargs):
         '\nhttps://aatishb.com/covidtrends/')
     )
     plt.grid(which='major')
+    plt.gcf().set_size_inches(*FIGSIZE)
     sns.despine()
 
 
@@ -184,7 +182,7 @@ def main():
 
     # Setup chart style
     sns.set(style='ticks', context='notebook')
-
+    
     # Plot total cases with linear y axis
     plot_total_cases(
         dailes,
@@ -209,13 +207,47 @@ def main():
     )
     plt.savefig(path / 'new-cases.png')
 
-    # Plot growth factor
+    # Plot new cases growth factor
     plot_growthfactor(
         dailes,
+        gf_column='GrowthFactor',
+        ema_column='GF14DayEMA',
+        title='COVID-19 New Cases Growth Factor (UK)',
         color='C2'
     )
     plt.savefig(path / 'growth-factor.png')
 
+    # Plot test growth factor
+    plot_growthfactor(
+        dailes,
+        gf_column='TestGrowthFactor',
+        ema_column='TestGF14DayEMA',
+        title='COVID-19 Tests Growth Factor (UK)',
+        color='C5'
+    )
+    plt.savefig(path / 'tests-growth-factor.png')
+
+    # Plot percent positive growth factor
+    plot_growthfactor(
+        dailes,
+        gf_column='PositiveGrowthFactor',
+        ema_column='PositiveGF14DayEMA',
+        title='COVID-19 % Positive Tests Growth Factor (UK)',
+        color='C7'
+    )
+    plt.savefig(path / 'positive-test-growth-factor.png')
+
+    # Plot deaths growth factor
+    plot_growthfactor(
+        dailes,
+        gf_column='GrowthFactorDeaths',
+        ema_column='GFD14DayEMA',
+        title='COVID-19 Deaths Growth Factor (UK)',
+        color='C8'
+    )
+    plt.savefig(path / 'death-growth-factor.png')
+
+    # Plot trajectories
     plot_new_v_total_cases(
         dailes, 
         color='C3'
