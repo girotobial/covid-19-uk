@@ -22,7 +22,7 @@ def main():
         on='DateVal',
         how='left'
     )
-    conf_cases.to_csv(data_path)
+    conf_cases.to_csv(data_path, index=False)
 
 
 if __name__ == '__main__':
