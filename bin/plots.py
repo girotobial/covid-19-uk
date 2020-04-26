@@ -85,7 +85,7 @@ def plot_new_cases(data, **kwargs):
     sns.despine(left=True)
 
 
-def plot_growthfactor(data, gf_column, ema_column, title, ma_label, **kwargs):
+def plot_growthfactor(data, gf_column, ema_column, title, ma_label=None, **kwargs):
     plt.clf()
     data = data.reset_index()
     data['DateVal'] = pd.to_datetime(data['DateVal']).dt.to_pydatetime()
