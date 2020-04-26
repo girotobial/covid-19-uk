@@ -249,7 +249,7 @@ def main():
 
     # Plot England growth factor by date of specimen
     plot_growthfactor(
-        dailes,
+        dailes.iloc[:-5, :],
         gf_column='GFSpecimenDate',
         ema_column='RollingGFSpecimenDate',
         title='COVID-19 Growth Factor by Specimen Date (England)',
