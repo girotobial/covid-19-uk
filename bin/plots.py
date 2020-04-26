@@ -85,7 +85,7 @@ def plot_new_cases(data, **kwargs):
     sns.despine(left=True)
 
 
-def plot_growthfactor(data, gf_column, ema_column, title, **kwargs):
+def plot_growthfactor(data, gf_column, ema_column, title, ma_label, **kwargs):
     plt.clf()
     data = data.reset_index()
     data['DateVal'] = pd.to_datetime(data['DateVal']).dt.to_pydatetime()
@@ -99,11 +99,14 @@ def plot_growthfactor(data, gf_column, ema_column, title, **kwargs):
         label='Growth Factor'
     )
     alpha = 2 / (14 + 1)
+    if ma_label is None:
+        ma_label = f'Exponential Moving Average ($\\alpha$ ={alpha: .2f})'
+    
     plt.plot(
         data['DateVal'],
         data[ema_column],
         **kwargs,
-        label=f'Exponential Moving Average ($\\alpha$ ={alpha: .2f})',
+        label=ma_title,
         marker=None,
     )
     end_x = data['DateVal'].iloc[-1]
@@ -253,6 +256,7 @@ def main():
         gf_column='GFSpecimenDate',
         ema_column='RollingGFSpecimenDate',
         title='COVID-19 Growth Factor by Specimen Date (England)',
+        ma_label='7 Day Moving Average',
         color='C2'
     )
     plt.savefig(path / 'specimen-date-growth-factor.png')
