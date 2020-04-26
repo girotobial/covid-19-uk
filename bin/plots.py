@@ -106,7 +106,7 @@ def plot_growthfactor(data, gf_column, ema_column, title, ma_label=None, **kwarg
         data['DateVal'],
         data[ema_column],
         **kwargs,
-        label=ma_title,
+        label=ma_label,
         marker=None,
     )
     end_x = data['DateVal'].iloc[-1]
