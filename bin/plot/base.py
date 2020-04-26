@@ -2,15 +2,14 @@
 # Defines base class for all plots
 
 from abc import ABC, abstractmethod
-import matplotlib.pyplot as plt
+import matplotlib as mplt
 
 class ABCPlot(ABC):
     def __init__(self, figsize=None):
         if figsize is None:
             figsize = (9.75, 6)
-        fig, ax = plt.subplots(figsize=figsize)
-        self.fig = fig
-        self.ax = ax
+        self.fig = mplt.figure.Figure()
+        self.ax = mplt.axes.Axes()
 
     @abstractmethod
     def plot(self):
@@ -20,6 +19,5 @@ class ABCPlot(ABC):
     def show(self):
         pass
 
-    @abstractmethod
-    def save(self):
-        pass
+    def save(self, path):
+        self.fig.savefig(path)

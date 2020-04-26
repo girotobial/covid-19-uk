@@ -27,10 +27,6 @@ class GrowthFactor(ABCPlot):
         # TODO
         pass
 
-    def save(self):
-        # TODO
-        pass
-
 
 def plot_growth_factor():
     '''
