@@ -109,8 +109,8 @@ def plot_growthfactor(data, gf_column, ema_column, title, ma_label=None, **kwarg
         label=ma_label,
         marker=None,
     )
-    end_x = data['DateVal'].iloc[-1]
-    end_y = data[ema_column].iloc[-1]
+    end_x = data[data[ema_column].notna()]['DateVal'].iloc[-1]
+    end_y = data[data[ema_column].notna()][ema_column].iloc[-1]
     plt.text(
         end_x,
         end_y,
@@ -256,7 +256,7 @@ def main():
         gf_column='GFSpecimenDate',
         ema_column='RollingGFSpecimenDate',
         title='COVID-19 Growth Factor by Specimen Date (England)',
-        ma_label='7 Day Moving Average',
+        ma_label='7 Day Moving Average (Centered)',
         color='C2'
     )
     plt.savefig(path / 'specimen-date-growth-factor.png')
