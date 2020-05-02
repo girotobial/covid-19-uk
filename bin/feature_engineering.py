@@ -11,7 +11,7 @@ def growth_ratio(iterable):
             ratio = 1
 
         if i > 0:
-            ratio = divide(val, iterable[i - 1], 1)
+            ratio = divide(val, iterable[i - 1], None)
 
         growth_list.append(ratio)
     return growth_list
@@ -98,7 +98,7 @@ def main(dataframe=None):
     )
 
     # Calculate rolling average GF by specimen date
-    rolling_sum = dataframe['EngConfSpecimens'].rolling(7).sum()
+    rolling_sum = dataframe['EngConfSpecimens'].rolling(7, center=True).sum()
     dataframe['RollingGFSpecimenDate'] = growth_ratio(rolling_sum.values)
 
     # Date features
