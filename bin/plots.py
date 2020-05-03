@@ -144,7 +144,7 @@ def plot_new_v_total_cases(data, cases_col, title, color, **kwargs):
         data['cumulative'],
         data['rolling_new_cases'],
         color=color,
-        marker='.'
+        **kwargs
     )
     end_x = data['cumulative'].iloc[-1]
     end_y = data['rolling_new_cases'].iloc[-1]
@@ -267,7 +267,9 @@ def main():
         dailes,
         'CMODateCount',
         'Trajectory of Covid-19 Confirmed Cases (UK)',
-        color='C3'
+        color='C3',
+        marker='.',
+        markevery=[-1]
     )
     plt.savefig(path / 'trajectory.png')
 
@@ -275,7 +277,9 @@ def main():
         dailes.iloc[:-5, :].copy(),
         'EngConfSpecimens',
         'Trajectory of Covid-19 Confirmed Cases (England)',
-        color='C3'
+        color='C3',
+        marker='.',
+        markevery=[-1]
     )
     plt.savefig(path / 'trajectory_england.png')
 
