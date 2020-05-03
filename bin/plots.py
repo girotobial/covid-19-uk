@@ -134,18 +134,19 @@ def plot_growthfactor(data, gf_column, ema_column, title, ma_label=None, **kwarg
     sns.despine(left=True)
 
 
-def plot_new_v_total_cases(data, color, **kwargs):
+def plot_new_v_total_cases(data, cases_col, title, color, **kwargs):
     plt.clf()
-    data['rolling_new_cases'] = data['CMODateCount'].rolling(7).sum()
-    data = data[data['CumCases'] > 10]
+    data['rolling_new_cases'] = data[cases_col].rolling(7).sum()
+    data['cumulative'] = data[cases_col].expanding().sum()
+    data = data[data[cases_col] > 10]
 
     plt.plot(
-        data['CumCases'],
+        data['cumulative'],
         data['rolling_new_cases'],
         color=color,
         marker='.'
     )
-    end_x = data['CumCases'].iloc[-1]
+    end_x = data['cumulative'].iloc[-1]
     end_y = data['rolling_new_cases'].iloc[-1]
     plt.text(
         end_x*1.2,
@@ -163,7 +164,7 @@ def plot_new_v_total_cases(data, color, **kwargs):
     plt.ylabel('New Confirmed Cases (in the Past Week)')
     plt.xlabel('Total Confirmed Cases')
     today = date.today().strftime(r"%d/%m/%Y")
-    plt.title(f'Trajectory of Covid-19 Confirmed Cases (UK) ({today})')
+    plt.title(f'{title} ({today})')
     plt.text(
         10,
         1,
@@ -263,11 +264,20 @@ def main():
 
     # Plot trajectories
     plot_new_v_total_cases(
-        dailes, 
+        dailes,
+        'CMODateCount',
+        'Trajectory of Covid-19 Confirmed Cases (UK)',
         color='C3'
     )
     plt.savefig(path / 'trajectory.png')
 
+    plot_new_v_total_cases(
+        dailes.iloc[:-5, :].copy(),
+        'EngConfSpecimens',
+        'Trajectory of Covid-19 Confirmed Cases (England)',
+        color='C3'
+    )
+    plt.savefig(path / 'trajectory_england.png')
 
 if __name__ == '__main__':
     main()
