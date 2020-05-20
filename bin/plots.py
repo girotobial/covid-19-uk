@@ -91,7 +91,15 @@ def plot_new_cases(
             )
         plt.legend()
     
-    plt.yscale(yscale)
+    if yscale == 'log':
+        plt.yscale(yscale, basey=2)
+        formatter = ScalarFormatter()
+        formatter.set_scientific(False)
+        ax = plt.gca()
+        ax.yaxis.set_major_formatter(formatter)
+    else:
+        plt.yscale(yscale)
+    
     plt.xlabel('Date')
     plt.ylabel(ylabel)
     today = date.today().strftime(r"%d/%m/%Y")
