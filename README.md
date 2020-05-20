@@ -17,9 +17,12 @@ COVID-19 UK aims to use the data from Public Health England to track and analyse
 #### By Date reported (UK)
 ![](new-cases.png)
 
-#### By Specimend Date (England)
+#### By Specimen Date (England)
+
+##### Linear y scale
 ![](new-cases-eng.png)
 
+##### Logarithmic y scale
 ![](new-cases-eng-log.png)
 
 ### Growth factor
@@ -43,5 +46,5 @@ COVID-19 UK aims to use the data from Public Health England to track and analyse
 #### By Date Reported (UK)
 ![](trajectory.png)
 
-#### By Specimend Date (Eng)
+#### By Specimen Date (Eng)
 ![](trajectory_england.png)
