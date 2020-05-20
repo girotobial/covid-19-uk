@@ -6,7 +6,7 @@ COVID-19 UK aims to use the data from Public Health England to track and analyse
 
 ## Charts
 
-### Confirmed Cases
+### New Cases in UK
 
 ![](confirmed-cases-linear-axis.png)
 
@@ -14,7 +14,13 @@ COVID-19 UK aims to use the data from Public Health England to track and analyse
 
 ### New Cases
 
+#### By Date reported (UK)
 ![](new-cases.png)
+
+#### By Specimend Date (England)
+![](new-cases-eng.png)
+
+![](new-cases-eng-log.png)
 
 ### Growth factor
 
@@ -22,7 +28,11 @@ COVID-19 UK aims to use the data from Public Health England to track and analyse
 
 > <img src="https://render.githubusercontent.com/render/math?math=GrowthFactor=\frac{\Delta Cases_{d}}{\Delta Cases_{d - 1}}">
 
+#### By Date Reported (UK)
 ![](growth-factor.png)
+
+#### By Specimen Date (England)
+![](specimen-date-growth-factor.png)
 
 ### Growth Trajectory
 
@@ -30,4 +40,8 @@ COVID-19 UK aims to use the data from Public Health England to track and analyse
 
 [See more at https://aatishb.com/covidtrends/](https://aatishb.com/covidtrends/)
 
+#### By Date Reported (UK)
 ![](trajectory.png)
+
+#### By Specimend Date (Eng)
+![](trajectory_england.png)
