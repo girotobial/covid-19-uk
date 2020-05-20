@@ -64,7 +64,7 @@ def plot_total_cases(data, yscale='linear', **kwargs):
     plt.legend()
 
 
-def plot_new_cases(data, y, ylabel, title, **kwargs):
+def plot_new_cases(data, y, ylabel, title, moving_average=False, **kwargs):
     # Esnure any existing plots are cleared
     plt.clf()
 
@@ -74,6 +74,8 @@ def plot_new_cases(data, y, ylabel, title, **kwargs):
 
     # Plot bar chart
     plt.bar(data['DateVal'], data[y], **kwargs)
+    if moving_average:
+        plt.plot(data['DateVal'], data[y.rolling(7, center=True).mean()])
     plt.gca().xaxis_date()
     plt.xlabel('Date')
     plt.ylabel(ylabel)
