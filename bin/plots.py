@@ -64,7 +64,7 @@ def plot_total_cases(data, yscale='linear', **kwargs):
     plt.legend()
 
 
-def plot_new_cases(data, **kwargs):
+def plot_new_cases(data, y, ylabel, title, **kwargs):
     # Esnure any existing plots are cleared
     plt.clf()
 
@@ -73,12 +73,12 @@ def plot_new_cases(data, **kwargs):
     data['DateVal'] = pd.to_datetime(data['DateVal']).dt.to_pydatetime()
 
     # Plot bar chart
-    plt.bar(data['DateVal'], data['CMODateCount'], **kwargs)
+    plt.bar(data['DateVal'], data[y], **kwargs)
     plt.gca().xaxis_date()
     plt.xlabel('Date')
-    plt.ylabel('New Cases')
+    plt.ylabel(ylabel)
     today = date.today().strftime(r"%d/%m/%Y")
-    plt.title(f'New Confimed Cases UK ({today})')
+    plt.title(f'{title}({today})')
     plt.xticks(rotation=45, ha='right')
     plt.grid(which='major', axis='y')
     plt.tight_layout()
@@ -207,6 +207,9 @@ def main():
     # Plot new cases
     plot_new_cases(
         dailes,
+        y='CMODateCount',
+        ylabel='New Cases',
+        title='New Confirmed Cases (UK)',
         color='C1'
     )
     plt.savefig(path / 'new-cases.png')
@@ -282,6 +285,15 @@ def main():
         markevery=[-1]
     )
     plt.savefig(path / 'trajectory_england.png')
+
+    plot_new_cases(
+        dailes,
+        y='EngConfSpecimens',
+        ylabel='New Cases',
+        title='New Confirmed Cases by Specimen Date (Eng)',
+        color='C1'
+    )
+    plt.savefig(path / 'new-cases.png')
 
 if __name__ == '__main__':
     main()
