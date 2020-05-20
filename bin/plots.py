@@ -64,7 +64,15 @@ def plot_total_cases(data, yscale='linear', **kwargs):
     plt.legend()
 
 
-def plot_new_cases(data, y, ylabel, title, moving_average=False, **kwargs):
+def plot_new_cases(
+    data,
+    y,
+    ylabel,
+    title,
+    moving_average=False,
+    yscale='linear',
+    **kwargs
+    ):
     # Esnure any existing plots are cleared
     plt.clf()
 
@@ -79,10 +87,11 @@ def plot_new_cases(data, y, ylabel, title, moving_average=False, **kwargs):
         plt.plot(
             data['DateVal'], data[y].rolling(7, center=True).mean(),
             label='Moving Average',
-            **kwargs
+            color='k'
             )
         plt.legend()
     
+    plt.yscale(yscale)
     plt.xlabel('Date')
     plt.ylabel(ylabel)
     today = date.today().strftime(r"%d/%m/%Y")
@@ -303,6 +312,17 @@ def main():
         color='C1',
     )
     plt.savefig(path / 'new-cases-eng.png')
+
+    plot_new_cases(
+        dailes,
+        y='EngConfSpecimens',
+        ylabel='New Cases',
+        title='New Confirmed Cases by Specimen Date (Eng)',
+        moving_average=True,
+        yscale='log',
+        color='C1',
+    )
+    plt.savefig(path / 'new-cases-eng-log.png')
 
 if __name__ == '__main__':
     main()
