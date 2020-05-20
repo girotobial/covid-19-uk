@@ -74,9 +74,15 @@ def plot_new_cases(data, y, ylabel, title, moving_average=False, **kwargs):
 
     # Plot bar chart
     plt.bar(data['DateVal'], data[y], **kwargs)
-    if moving_average:
-        plt.plot(data['DateVal'], data[y.rolling(7, center=True).mean()])
     plt.gca().xaxis_date()
+    if moving_average:
+        plt.plot(
+            data['DateVal'], data[y].rolling(7, center=True).mean(),
+            label='Moving Average',
+            **kwargs
+            )
+        plt.legend()
+    
     plt.xlabel('Date')
     plt.ylabel(ylabel)
     today = date.today().strftime(r"%d/%m/%Y")
@@ -293,9 +299,10 @@ def main():
         y='EngConfSpecimens',
         ylabel='New Cases',
         title='New Confirmed Cases by Specimen Date (Eng)',
-        color='C1'
+        moving_average=True,
+        color='C1',
     )
-    plt.savefig(path / 'new-cases.png')
+    plt.savefig(path / 'new-cases-eng.png')
 
 if __name__ == '__main__':
     main()
