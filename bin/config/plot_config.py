@@ -12,6 +12,19 @@ class PlotConfig(ABCConfig):
         self.font_size = None
     
     def read_file(self, path, section: str):
+        '''Reads configuration file.
+
+        Parameters
+        ----------
+        path : str or Path
+            path to the config file
+        section: str
+            section to be read
+
+        Returns
+        -------
+        PlotConfig
+        '''
         config = self._open_config_file(path, section)
         
         self.figsize = (
