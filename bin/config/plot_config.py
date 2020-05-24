@@ -16,14 +16,26 @@ class PlotConfig(ABCConfig):
 
         Parameters
         ----------
-        path : str or Path
+        path: str or Path
             path to the config file
         section: str
             section to be read
 
         Returns
         -------
-        PlotConfig
+        self
+
+        Configuration Parameters
+        ------------------------
+        figure height: float
+            height of the plot figure
+        figure width: float
+            width of plot figure
+        style: str
+            matplotlib RCParam style
+        font: str
+            matplotlib compatible font
+        font size: float
         '''
         config = self._open_config_file(path, section)
         
