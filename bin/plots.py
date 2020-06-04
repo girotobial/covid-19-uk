@@ -153,7 +153,7 @@ def plot_growthfactor(data, gf_column, ema_column, title, ma_label=None, **kwarg
     plt.hlines(1, left, right, ls='--', color='k')
     plt.xticks(rotation=45, ha='right')
     plt.grid(which='major', axis='y')
-    plt.ylim(0, 2.5)
+    plt.ylim(0.5, 1.5)
     plt.gcf().set_size_inches(*FIGSIZE)
     plt.tight_layout()
     sns.despine(left=True)
